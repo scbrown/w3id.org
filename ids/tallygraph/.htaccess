@@ -1,0 +1,22 @@
+# # /tallygraph/
+#
+# Permanent identifiers for the Tallygraph stack and Quechua vocabulary.
+# https://w3id.org/tallygraph/quechua/ns# is the vocabulary namespace.
+#
+# ## Contact
+# Maintainer: Steve Brown
+# GitHub username: scbrown
+
+RewriteEngine on
+
+# Explicit formats take precedence over the Accept header.
+RewriteRule ^quechua/ns\.ttl$ https://scbrown.github.io/quechua/ns-stable.ttl [R=303,L]
+
+# Do not select Turtle when the client explicitly rejects it with q=0.
+RewriteCond %{HTTP_ACCEPT} text/turtle [NC]
+RewriteCond %{HTTP_ACCEPT} !(^|,)[[:space:]]*text/turtle[[:space:]]*;[[:space:]]*q=0(\.0+)?([[:space:]]*(,|$)) [NC]
+RewriteRule ^quechua/ns$ https://scbrown.github.io/quechua/ns-stable.ttl [R=303,L]
+
+# Browsers, unspecified formats and unsupported formats get the HTML catalog.
+RewriteRule ^quechua/ns(\.html)?$ https://scbrown.github.io/quechua/ns-stable.html [R=303,L]
+RewriteRule ^$ https://github.com/tallygraph [R=302,L]
